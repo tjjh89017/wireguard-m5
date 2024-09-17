@@ -19,8 +19,8 @@ jobs:
         with:
           repository: WireGuard/wireguard-go
           path: wireguard-go
-      - run: |
-          docker run --platform linux/arm/v7 --rm -v $(pwd)/wireguard-go:/work -w /work tjjh89017/wg-m5 make
+      - uses: actions/setup-go@v5
+      - run: make -C wireguard-go
 
       - uses: actions/checkout@v4
         with:
