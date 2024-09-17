@@ -30,7 +30,7 @@ jobs:
           repository: WireGuard/wireguard-tools
           path: wireguard-tools
       - run: |
-          docker run --platform linux/arm/v7 --rm -v $(pwd)/wireguard-tools:/work -w /work tjjh89017/wg-m5 bash -c 'ls;make PLATFORM=unix'
+          docker run --platform linux/arm/v7 --rm -v $(pwd)/wireguard-tools:/work -w /work tjjh89017/wg-m5 bash -c 'make PLATFORM=unix -C src'
 
       - uses: actions/upload-artifact@v4
         with:
