@@ -19,6 +19,9 @@ jobs:
       - run: |
           docker buildx build --platform linux/arm/v7 -t arm-build .
 
+      - run: |
+          docker images
+
       - uses: actions/checkout@v4
         with:
           repository: WireGuard/wireguard-go
