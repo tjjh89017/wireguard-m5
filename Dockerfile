@@ -1,6 +1,6 @@
-FROM ubuntu
+FROM ubuntu:20.04
 
 RUN apt update
-RUN apt install -y build-essential golang
+RUN apt install -y build-essential
 
 WORKDIR /work
