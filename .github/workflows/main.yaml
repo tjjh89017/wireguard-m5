@@ -20,14 +20,14 @@ jobs:
           repository: WireGuard/wireguard-go
           path: wireguard-go
       - run: |
-          docker run --platform linux/arm/v7 --rm -v $(pwd)/wireguard-go:/work -w /work arm-build make
+          docker run --platform linux/arm/v7 --rm -v $(pwd)/wireguard-go:/work -w /work tjjh89017/wg-m5 make
 
       - uses: actions/checkout@v4
         with:
           repository: WireGuard/wireguard-tools
           path: wireguard-tools
       - run: |
-          docker run --platform linux/arm/v7 --rm -v $(pwd)/wireguard-tools:/work -w /work arm-build make PLATFORM=unix
+          docker run --platform linux/arm/v7 --rm -v $(pwd)/wireguard-tools:/work -w /work tjjh89017/wg-m5 make PLATFORM=unix
 
       - uses: actions/upload-artifact@v4
         with:
