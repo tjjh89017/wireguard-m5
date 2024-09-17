@@ -5,16 +5,10 @@ on:
       - main
 
 jobs:
-  build:
-    name: Build Wireguard
+  build-go:
+    name: Build Wireguard Go
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: docker/setup-qemu-action@v3
-        with:
-          platforms: arm
-
       - uses: actions/checkout@v4
         with:
           repository: WireGuard/wireguard-go
@@ -25,17 +19,25 @@ jobs:
           GOARCH: arm
           GOOS: linux
 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wireguard-go
+          path: wireguard-go/wireguard-go
+
+  build-tools:
+    name: Build Wireguard tools
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm
+
       - uses: actions/checkout@v4
         with:
           repository: WireGuard/wireguard-tools
           path: wireguard-tools
       - run: |
-          docker run --platform linux/arm/v7 --rm -v $(pwd)/wireguard-tools:/work -w /work tjjh89017/wg-m5 bash -c 'make PLATFORM=unix CFLAGS="-O3 -U__linux__" LDFLAGS=-static -C src'
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: wireguard-go
-          path: wireguard-go/wireguard-go
+          docker run --platform linux/arm/v7 --rm -v $(pwd)/wireguard-tools:/work -w /work tjjh89017/wg-m5 bash -c 'PLATFORM=unix CFLAGS="-O3 -U__linux__" LDFLAGS=-static make -C src'
 
       - uses: actions/upload-artifact@v4
         with:
